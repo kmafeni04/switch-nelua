@@ -1,0 +1,55 @@
+local ssdg = require "ssdg.ssdg"
+
+local gen = ssdg.new{
+  lang = "lua",
+  lead = "-",
+  single_line = "--",
+  multi_line = {
+    starting = "--[[",
+    ending = "]]"
+  }
+}
+
+local subs: hashmap(string, string)
+subs["lang"] = gen.conf.lang
+
+gen:add([=[# switch-nelua
+
+Macro function to allow switching on not only numbers
+
+## Requirements
+- [nelua](https://nelua.io/)
+
+## How to install
+Copy `switch.nelua` into your project and require normally or add to your [nlpm](https://github.com/kmafeni04/nlpm) package dependencies
+```lua
+{
+  name = "switch-nelua",
+  repo = "https://github.com/kmafeni04/switch-nelua",
+  version = "COMMIT-HASH-OR-TAG",
+},
+```
+
+## Quick start
+
+```:lang:
+local y = 1
+local res = _switch!(y, {
+  [1] = "hello",
+  _default = (do
+    in "_default"
+  end)
+})
+-- when y == 1
+print(res) --> hello
+-- when y == anything else
+print(res) --> _default
+```
+
+## Reference
+
+]=], {subs = subs})
+
+gen:add_file("./switch.nelua", { subs = subs })
+
+gen:write_file("README.md")
