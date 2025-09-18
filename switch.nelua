@@ -2,14 +2,13 @@
 ---`
 ## function _switch(expr, cases)
 ---`
-  ## static_assert(traits.is_table(expr), "'expr' must be a value")
   ## static_assert(traits.is_table(cases), "'cases' must be a lua 'table'")
   ## local _default
-  ## for i, v in ipairs(cases) do
-    ## static_assert(v.is_Pair, ("index '%d' of 'cases' is not a pair"):format(i))
-    ## if v[1] == "_default" then _default = v[2] end
-    if #[expr]# == #[v[1]]# then
-      in #[v[2]]#
+  ## for i, _case in ipairs(cases) do
+    ## static_assert(_case.is_Pair, ("index '%d' of 'cases' is not a pair"):format(i))
+    ## if _case[1] == "_default" then _default = _case[2] end
+    if #[expr]# == #[_case[1]]# then
+      in #[_case[2]]#
     end
   ## end
   ## static_assert(_default, "'_default' case was not declared")
